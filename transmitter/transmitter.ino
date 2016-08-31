@@ -3,21 +3,22 @@
 
 RF24 radio(7,8);
 
-byte addresses[][6] = {"1Node","2Node"};
+byte address[6] = "1test";
+
+unsigned long counter = 0;
 
 void setup() {
   Serial.begin(115200);
   radio.begin();
-  radio.openWritingPipe(addresses[1]);
+  radio.openWritingPipe(address);
 }
 
-unsigned long demo = 0;
-
 void loop() {
-  demo++;
+  Serial.print("Sending: ");
+  Serial.println(counter);
+  radio.write(&counter, sizeof(unsigned long));
 
-  Serial.println("writing");
-  radio.write(&demo, sizeof(unsigned long));
+  counter++;
 
   delay(1000);
 }
